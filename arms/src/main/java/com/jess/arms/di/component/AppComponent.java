@@ -3,16 +3,16 @@ package com.jess.arms.di.component;
 import android.app.Application;
 
 import com.google.gson.Gson;
-import com.jess.arms.base.BaseApplication;
+import com.jess.arms.base.delegate.AppDelegate;
 import com.jess.arms.di.module.AppModule;
 import com.jess.arms.di.module.ClientModule;
-import com.jess.arms.di.module.GlobeConfigModule;
-import com.jess.arms.di.module.ImageModule;
+import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.widget.imageloader.ImageLoader;
 
 import java.io.File;
+import java.util.Map;
 
 import javax.inject.Singleton;
 
@@ -24,7 +24,7 @@ import okhttp3.OkHttpClient;
  * Created by jess on 8/4/16.
  */
 @Singleton
-@Component(modules = {AppModule.class, ClientModule.class, ImageModule.class, GlobeConfigModule.class})
+@Component(modules = {AppModule.class, ClientModule.class, GlobalConfigModule.class})
 public interface AppComponent {
     Application Application();
 
@@ -49,5 +49,8 @@ public interface AppComponent {
     //用于管理所有activity
     AppManager appManager();
 
-    void inject(BaseApplication application);
+    //用来存取一些整个App公用的数据,切勿大量存放大容量数据
+    Map<String, Object> extras();
+
+    void inject(AppDelegate delegate);
 }
